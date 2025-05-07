@@ -6,6 +6,7 @@ import com.todo.taskservice.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class TaskService {
@@ -18,8 +19,8 @@ public class TaskService {
         this.taskRepository = taskRepository;
         this.taskFactory = taskFactory;
     }
-    public Task addTask(){
-        Task task = taskFactory.createDefaultTask();
+    public Task addTask(Long createdBy, Long boardId){
+        Task task = taskFactory.createDefaultTask(createdBy, boardId);
         return taskRepository.save(task);
     }
     public Task getById(Long id){
@@ -51,6 +52,23 @@ public class TaskService {
     public void deleteTask(Long id){
         taskRepository.deleteById(id);
     }
-
+    public void assignTaskToUser(Long taskId, Long userId){
+        Task task = taskRepository.findById(taskId).orElseThrow(()->new RuntimeException("Task not found."));
+        task.setAssignedUserId(userId);
+        task.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        taskRepository.save(task);
+    }
+    public void unassignTaskToUser(Long taskId, Long userId){
+        Task task = taskRepository.findById(taskId).orElseThrow(()->new RuntimeException("Task not found."));
+        task.setAssignedUserId(null);
+        task.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        taskRepository.save(task);
+    }
+    public List<Task> viewTasksAssignedToUser(Long userId){
+        return taskRepository.findByAssignedUserId(userId);
+    }
+    public List<Task> viewTasksCreatedByUser(Long userId){
+        return taskRepository.findByCreatedBy(userId);
+    }
 
 }
