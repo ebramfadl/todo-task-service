@@ -1,11 +1,13 @@
 package com.todo.taskservice.service;
 
+import com.todo.taskservice.enums.TaskStatus;
 import com.todo.taskservice.factory.TaskFactory;
 import com.todo.taskservice.model.Task;
 import com.todo.taskservice.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class TaskService {
@@ -52,5 +54,21 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
+
+    public Task markTaskAsCompleted(Long id) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+        task.setTaskStatus(TaskStatus.COMPLETED);
+        task.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        return taskRepository.save(task);
+    }
+
+    public List<Task> searchTasksByTitle(String title) {
+        return taskRepository.findByTitleContainingIgnoreCase(title);
+    }
+
+    public List<Task> searchTasksByTag(String tag) {
+        return taskRepository.findByTagNameContainingIgnoreCase(tag);
+    }
 
 }

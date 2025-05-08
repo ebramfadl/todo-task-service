@@ -2,7 +2,10 @@ package com.todo.taskservice.controller;
 
 import com.todo.taskservice.model.Task;
 import com.todo.taskservice.service.TaskService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/task")
@@ -32,5 +35,20 @@ public class TaskController {
     public void deleteById(@PathVariable Long id){
         taskService.deleteTask(id);
     }
+
+    @PutMapping("/{id}/complete")
+    public ResponseEntity<Task> markTaskCompleted(@PathVariable Long id) {
+        return ResponseEntity.ok(taskService.markTaskAsCompleted(id));
+    }
+    @GetMapping("/search/title")
+    public ResponseEntity<List<Task>> searchByTitle(@RequestParam String title) {
+        return ResponseEntity.ok(taskService.searchTasksByTitle(title));
+    }
+
+    @GetMapping("/search/tag")
+    public ResponseEntity<List<Task>> searchByTag(@RequestParam String tag) {
+        return ResponseEntity.ok(taskService.searchTasksByTag(tag));
+    }
+
 
 }
