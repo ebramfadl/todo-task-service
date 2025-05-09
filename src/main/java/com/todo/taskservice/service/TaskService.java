@@ -1,5 +1,6 @@
 package com.todo.taskservice.service;
 
+import com.todo.taskservice.dto.TaskCreateDto;
 import com.todo.taskservice.factory.TaskFactory;
 import com.todo.taskservice.model.Task;
 import com.todo.taskservice.repository.TaskRepository;
@@ -19,9 +20,8 @@ public class TaskService {
         this.taskRepository = taskRepository;
         this.taskFactory = taskFactory;
     }
-    public Task addTask(Long createdBy, Long boardId){
-        Task task = taskFactory.createDefaultTask(createdBy, boardId);
-        return taskRepository.save(task);
+    public Task addTask(TaskCreateDto taskCreateDto, Long createdBy){
+        return taskFactory.createTask(taskCreateDto,createdBy);
     }
     public Task getById(Long id){
         return taskRepository.findById(id).orElseThrow(()-> new RuntimeException("Task not found."));
@@ -55,13 +55,11 @@ public class TaskService {
     public void assignTaskToUser(Long taskId, Long userId){
         Task task = taskRepository.findById(taskId).orElseThrow(()->new RuntimeException("Task not found."));
         task.setAssignedUserId(userId);
-        task.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         taskRepository.save(task);
     }
     public void unassignTaskToUser(Long taskId, Long userId){
         Task task = taskRepository.findById(taskId).orElseThrow(()->new RuntimeException("Task not found."));
         task.setAssignedUserId(null);
-        task.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         taskRepository.save(task);
     }
     public List<Task> viewTasksAssignedToUser(Long userId){

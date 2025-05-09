@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -32,7 +34,12 @@ public class Task {
     private Long assignedUserId; //fk to assigned user (might add it ot not)
     private Long createdBy; // fk to who created this task (must add)
 
+    @CreatedDate
+    @CreationTimestamp
     private Timestamp createdAt;
+
+    @CreatedDate
+    @CreationTimestamp
     private Timestamp updatedAt;
 
     public Long getId() {

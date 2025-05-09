@@ -1,5 +1,6 @@
 package com.todo.taskservice.controller;
 
+import com.todo.taskservice.dto.TaskCreateDto;
 import com.todo.taskservice.model.Task;
 import com.todo.taskservice.service.TaskService;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +16,9 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @PostMapping("/{boardId}") // will get the createdBy from the user microservice
-    public Task createTask(Long createdBy, @PathVariable Long boardId){
-        return taskService.addTask(createdBy,boardId);
+    @PostMapping // will get the createdBy from the user microservice
+    public Task createTask(@RequestBody TaskCreateDto taskCreateDto, Long createdBy){
+        return taskService.addTask(taskCreateDto, createdBy);
     }
 
     @GetMapping("/{id}")
@@ -43,12 +44,12 @@ public class TaskController {
     public void unassignTaskToUser(@PathVariable Long taskId, @PathVariable Long userId){
         taskService.unassignTaskToUser(taskId,userId);
     }
-    @GetMapping("/viewTasksOfUser/{userId}")
+    @GetMapping("/tasks/{userId}")
     public List<Task> viewTasksAssignedToUser(@PathVariable Long userId){
         return taskService.viewTasksAssignedToUser(userId);
     }
 
-    @GetMapping("/viewTasksCreatedByUser/{userId}")
+    @GetMapping("/created-by/{userId}")
     public List<Task> viewTasksCreatedByUser(@PathVariable Long userId){
         return taskService.viewTasksCreatedByUser(userId);
     }
