@@ -25,14 +25,14 @@ public class Task {
     private Long id;
     private String title;
     private String description;
-    private TaskStatus taskStatus; //pending
-    private TaskPriority taskPriority; //medium
-    private LocalDateTime deadline; // deadline set
-    private String tagName; //no tag name
+    private TaskStatus taskStatus;
+    private TaskPriority taskPriority;
+    private LocalDateTime deadline;
+    private String tagName;
 
-    private Long boardId; //fk to board
-    private Long assignedUserId; //fk to assigned user (might add it ot not)
-    private Long createdBy; // fk to who created this task (must add)
+    private Long boardId;
+    private Long assignedUserId;
+    private Long createdBy;
 
     @CreatedDate
     @CreationTimestamp
