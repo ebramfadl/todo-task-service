@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -38,8 +40,8 @@ public class Task {
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @CreatedDate
-    @CreationTimestamp
+    @LastModifiedBy
+    @UpdateTimestamp
     private Timestamp updatedAt;
 
 }
