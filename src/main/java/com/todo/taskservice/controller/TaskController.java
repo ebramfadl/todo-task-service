@@ -40,9 +40,9 @@ public class TaskController {
     public void assignTaskToUser(@PathVariable Long taskId, @PathVariable Long userId){
         taskService.assignTaskToUser(taskId,userId);
     }
-    @PutMapping("/unassign/{taskId}/{userId}")
-    public void unassignTaskToUser(@PathVariable Long taskId, @PathVariable Long userId){
-        taskService.unassignTaskToUser(taskId,userId);
+    @PutMapping("/unassign/{taskId}")
+    public void unassignTaskToUser(@PathVariable Long taskId){
+        taskService.unassignTaskToUser(taskId);
     }
     @GetMapping("/tasks/{userId}")
     public List<Task> viewTasksAssignedToUser(@PathVariable Long userId){

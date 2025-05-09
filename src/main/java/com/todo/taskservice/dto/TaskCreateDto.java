@@ -8,7 +8,6 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
 public class TaskCreateDto {
     private String title;
     private String description;

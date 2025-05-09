@@ -4,12 +4,14 @@ import com.todo.taskservice.dto.TaskCreateDto;
 import com.todo.taskservice.factory.TaskFactory;
 import com.todo.taskservice.model.Task;
 import com.todo.taskservice.repository.TaskRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
 
 @Service
+@Slf4j
 public class TaskService {
 
 
@@ -21,12 +23,15 @@ public class TaskService {
         this.taskFactory = taskFactory;
     }
     public Task addTask(TaskCreateDto taskCreateDto, Long createdBy){
+        log.info("TaskService: inside addTask method");
         return taskFactory.createTask(taskCreateDto,createdBy);
     }
     public Task getById(Long id){
+        log.info("TaskService: inside getById method");
         return taskRepository.findById(id).orElseThrow(()-> new RuntimeException("Task not found."));
     }
     public Task updateTask(Long id, Task updatedTask){
+        log.info("TaskService: inside updateTask method");
         Task existing = taskRepository.findById(id).orElseThrow(()->new RuntimeException("Task not found."));
         if(updatedTask.getTitle() != null){
             existing.setTitle(updatedTask.getTitle());
@@ -50,22 +55,27 @@ public class TaskService {
         return taskRepository.save(existing);
     }
     public void deleteTask(Long id){
+        log.info("TaskService: inside deleteTask method");
         taskRepository.deleteById(id);
     }
     public void assignTaskToUser(Long taskId, Long userId){
+        log.info("TaskService: inside assignTaskToUser method");
         Task task = taskRepository.findById(taskId).orElseThrow(()->new RuntimeException("Task not found."));
         task.setAssignedUserId(userId);
         taskRepository.save(task);
     }
-    public void unassignTaskToUser(Long taskId, Long userId){
+    public void unassignTaskToUser(Long taskId){
+        log.info("TaskService: inside unassignTaskToUser method");
         Task task = taskRepository.findById(taskId).orElseThrow(()->new RuntimeException("Task not found."));
         task.setAssignedUserId(null);
         taskRepository.save(task);
     }
     public List<Task> viewTasksAssignedToUser(Long userId){
+        log.info("TaskService: inside viewTasksAssignedToUser method");
         return taskRepository.findByAssignedUserId(userId);
     }
     public List<Task> viewTasksCreatedByUser(Long userId){
+        log.info("TaskService: inside viewTasksCreatedByUser method");
         return taskRepository.findByCreatedBy(userId);
     }
 
