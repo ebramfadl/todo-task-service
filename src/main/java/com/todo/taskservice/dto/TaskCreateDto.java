@@ -3,7 +3,6 @@ package com.todo.taskservice.dto;
 import com.todo.taskservice.enums.TaskPriority;
 import com.todo.taskservice.enums.TaskStatus;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;

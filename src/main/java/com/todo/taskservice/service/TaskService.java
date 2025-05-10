@@ -51,7 +51,6 @@ public class TaskService {
         if(updatedTask.getTagName()!=null){
             existing.setTagName(updatedTask.getTagName());
         }
-        existing.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         return taskRepository.save(existing);
     }
     public void deleteTask(Long id){
