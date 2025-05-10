@@ -38,10 +38,10 @@ public class Task {
 
     @CreatedDate
     @CreationTimestamp
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @LastModifiedBy
     @UpdateTimestamp
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
 }
