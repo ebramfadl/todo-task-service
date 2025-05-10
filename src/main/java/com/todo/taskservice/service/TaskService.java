@@ -22,9 +22,9 @@ public class TaskService {
         this.taskRepository = taskRepository;
         this.taskFactory = taskFactory;
     }
-    public Task addTask(TaskCreateDto taskCreateDto, Long createdBy){
+    public Task addTask(TaskCreateDto taskCreateDto){
         log.info("TaskService: inside addTask method");
-        return taskFactory.createTask(taskCreateDto,createdBy);
+        return taskFactory.createTask(taskCreateDto);
     }
     public Task getById(Long id){
         log.info("TaskService: inside getById method");

@@ -17,8 +17,8 @@ public class TaskController {
     }
 
     @PostMapping // will get the createdBy from the user microservice
-    public Task createTask(@RequestBody TaskCreateDto taskCreateDto, Long createdBy){
-        return taskService.addTask(taskCreateDto, createdBy);
+    public Task createTask(@RequestBody TaskCreateDto taskCreateDto){
+        return taskService.addTask(taskCreateDto);
     }
 
     @GetMapping("/{id}")

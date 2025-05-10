@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class TaskFactoryImpl implements TaskFactory {
 
     @Override
-    public Task createTask(TaskCreateDto taskCreateDto, Long createdBy) {
+    public Task createTask(TaskCreateDto taskCreateDto) {
         Task task = new Task();
         task.setTitle(taskCreateDto.getTitle());
         task.setDescription(taskCreateDto.getDescription());
