@@ -54,4 +54,14 @@ public class TaskController {
         return taskService.viewTasksCreatedByUser(userId);
     }
 
+    @PatchMapping("/assign-tag/{id}")
+    public Task assignTag(@PathVariable Long id, @RequestParam String tag) {
+        return taskService.assignTag(id, tag);
+    }
+
+    @PatchMapping("/unassign-tag/{id}")
+    public Task unassignTag(@PathVariable Long id) {
+        return taskService.unassignTag(id);
+    }
+
 }
