@@ -12,18 +12,15 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class FeignConfig {
 
     @Bean
-    public RequestInterceptor requestInterceptor(){
-        return new RequestInterceptor() {
-            @Override
-            public void apply(RequestTemplate requestTemplate) {
-                ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-                if(attributes!=null){
-                    String token = attributes.getRequest().getHeader("Authorization");
-                if(token!=null){
-                    requestTemplate.header("Authorization", token);
+    public RequestInterceptor requestInterceptor() {
+        return requestTemplate -> {
+            ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            if (attrs != null) {
+                HttpServletRequest request = attrs.getRequest();
+                String authHeader = request.getHeader("Authorization");
+                if (authHeader != null) {
+                    requestTemplate.header("Authorization", authHeader);
                 }
-                }
-
             }
         };
     }

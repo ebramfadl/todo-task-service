@@ -5,7 +5,6 @@ import com.todo.taskservice.dto.TaskCreateDto;
 import com.todo.taskservice.factory.TaskFactory;
 import com.todo.taskservice.model.Task;
 import com.todo.taskservice.repository.TaskRepository;
-import com.todo.userservice.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -63,10 +62,9 @@ public class TaskService {
     public void assignTaskToUser(Long taskId, Long userId){
         log.info("TaskService: inside assignTaskToUser method");
         Task task = taskRepository.findById(taskId).orElseThrow(()->new RuntimeException("Task not found."));
-//        User user = userClient.getUserById(userId);
-//        if(user==null){
-//            throw new RuntimeException("Please enter a valid user Id");
-//        }
+        if(!userClient.checkUserExistsById(userId)){
+            throw new RuntimeException("Please enter a valid user Id");
+        }
         task.setAssignedUserId(userId);
         taskRepository.save(task);
     }
