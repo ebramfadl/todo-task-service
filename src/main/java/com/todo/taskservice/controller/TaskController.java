@@ -1,10 +1,13 @@
 package com.todo.taskservice.controller;
 
 import com.todo.taskservice.dto.TaskCreateDto;
+import com.todo.taskservice.enums.TaskPriority;
+import com.todo.taskservice.enums.TaskStatus;
 import com.todo.taskservice.model.Task;
 import com.todo.taskservice.service.TaskService;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -53,5 +56,31 @@ public class TaskController {
     public List<Task> viewTasksCreatedByUser(@PathVariable Long userId){
         return taskService.viewTasksCreatedByUser(userId);
     }
+
+    @GetMapping("/filter")
+    public List<Task> filterTasks(
+            @RequestParam(value = "priority", required = false) TaskPriority priority,
+            @RequestParam(value = "status", required = false) TaskStatus status) {
+        if (priority != null && status != null) {
+            return taskService.filterTasksByPriorityAndStatus(priority, status);
+        } else if (priority != null) {
+            return taskService.filterTasksByPriority(priority);
+        } else if (status != null) {
+            return taskService.filterTasksByStatus(status);
+        } else {
+            return taskService.getAllTasks();
+        }
+    }
+    @GetMapping("/all")
+    public List<Task> getAllTask(){
+        return taskService.getAllTasks();
+    }
+    @GetMapping("/date-range")
+    public List<Task> getTasksByDateRange(
+            @RequestParam("startDate") LocalDateTime startDate,
+            @RequestParam("endDate") LocalDateTime endDate) {
+        return taskService.getTasksByDateRange(startDate, endDate);
+    }
+
 
 }
