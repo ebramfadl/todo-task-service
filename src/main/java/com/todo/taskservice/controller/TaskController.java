@@ -36,16 +36,16 @@ public class TaskController {
         taskService.deleteTask(id);
     }
 
-    @PutMapping("/{id}/complete")
+    @PutMapping("/complete/{id}")
     public ResponseEntity<Task> markTaskCompleted(@PathVariable Long id) {
         return ResponseEntity.ok(taskService.markTaskAsCompleted(id));
     }
-    @GetMapping("/search/title")
+    @GetMapping("/search-by-title")
     public ResponseEntity<List<Task>> searchByTitle(@RequestParam String title) {
         return ResponseEntity.ok(taskService.searchTasksByTitle(title));
     }
 
-    @GetMapping("/search/tag")
+    @GetMapping("/search-by-tag")
     public ResponseEntity<List<Task>> searchByTag(@RequestParam String tag) {
         return ResponseEntity.ok(taskService.searchTasksByTag(tag));
     }
