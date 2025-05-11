@@ -1,5 +1,6 @@
 package com.todo.taskservice.service;
 
+import com.todo.taskservice.client.UserClient;
 import com.todo.taskservice.dto.TaskCreateDto;
 import com.todo.taskservice.factory.TaskFactory;
 import com.todo.taskservice.model.Task;
@@ -51,7 +52,6 @@ public class TaskService {
         if(updatedTask.getTagName()!=null){
             existing.setTagName(updatedTask.getTagName());
         }
-        existing.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         return taskRepository.save(existing);
     }
     public void deleteTask(Long id){
