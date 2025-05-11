@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface UserClient {
     @GetMapping("")
     Long getLoggedInUser();
-
-//    @GetMapping("/{id}")
-//    User getUserById(@PathVariable Long id);
     @GetMapping("check-exists/{id}")
     Boolean checkUserExistsById(@PathVariable Long id);
 
