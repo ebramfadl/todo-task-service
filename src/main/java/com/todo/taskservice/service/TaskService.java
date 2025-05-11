@@ -1,5 +1,6 @@
 package com.todo.taskservice.service;
 
+import com.todo.taskservice.client.UserClient;
 import com.todo.taskservice.dto.TaskCreateDto;
 import com.todo.taskservice.factory.TaskFactory;
 import com.todo.taskservice.model.Task;
@@ -7,7 +8,6 @@ import com.todo.taskservice.repository.TaskRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -17,14 +17,16 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final TaskFactory taskFactory;
+    private final UserClient userClient;
 
-    public TaskService(TaskRepository taskRepository, TaskFactory taskFactory) {
+    public TaskService(TaskRepository taskRepository, TaskFactory taskFactory, UserClient userClient) {
         this.taskRepository = taskRepository;
         this.taskFactory = taskFactory;
+        this.userClient = userClient;
     }
     public Task addTask(TaskCreateDto taskCreateDto){
         log.info("TaskService: inside addTask method");
-        return taskFactory.createTask(taskCreateDto);
+        return taskRepository.save(taskFactory.createTask(taskCreateDto));
     }
     public Task getById(Long id){
         log.info("TaskService: inside getById method");
@@ -60,6 +62,9 @@ public class TaskService {
     public void assignTaskToUser(Long taskId, Long userId){
         log.info("TaskService: inside assignTaskToUser method");
         Task task = taskRepository.findById(taskId).orElseThrow(()->new RuntimeException("Task not found."));
+        if(!userClient.checkUserExistsById(userId)){
+            throw new RuntimeException("Please enter a valid user Id");
+        }
         task.setAssignedUserId(userId);
         taskRepository.save(task);
     }

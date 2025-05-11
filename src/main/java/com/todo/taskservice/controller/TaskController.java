@@ -16,7 +16,7 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @PostMapping // will get the createdBy from the user microservice
+    @PostMapping("/create-task") // will get the createdBy from the user microservice
     public Task createTask(@RequestBody TaskCreateDto taskCreateDto){
         return taskService.addTask(taskCreateDto);
     }
