@@ -87,4 +87,20 @@ public class TaskService {
         return taskRepository.findByBoardId(boardId);
     }
 
+    public Task assignTag(Long taskId, String tagName) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        task.setTagName(tagName);
+        return taskRepository.save(task);
+    }
+
+    public Task unassignTag(Long taskId) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found."));
+        task.setTagName(null); // or "" to represent no tag
+        return taskRepository.save(task);
+    }
+
+
 }
