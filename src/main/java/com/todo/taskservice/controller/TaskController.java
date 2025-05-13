@@ -15,12 +15,10 @@ public class TaskController {
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
-
-    @PostMapping("/create-task") // will get the createdBy from the user microservice
+    @PostMapping("/create-task")
     public Task createTask(@RequestBody TaskCreateDto taskCreateDto){
         return taskService.addTask(taskCreateDto);
     }
-
     @GetMapping("/{id}")
     public Task getTaskById(@PathVariable Long id){
         return taskService.getById(id);
@@ -30,7 +28,6 @@ public class TaskController {
     public Task updateTask(@PathVariable Long id,@RequestBody Task updatedTask){
         return taskService.updateTask(id,updatedTask);
     }
-
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id){
         taskService.deleteTask(id);
@@ -48,10 +45,13 @@ public class TaskController {
     public List<Task> viewTasksAssignedToUser(@PathVariable Long userId){
         return taskService.viewTasksAssignedToUser(userId);
     }
-
     @GetMapping("/created-by/{userId}")
     public List<Task> viewTasksCreatedByUser(@PathVariable Long userId){
         return taskService.viewTasksCreatedByUser(userId);
+    }
+    @GetMapping("/board/{boardId}")
+    public List<Task> getTasksByBoardId(@PathVariable Long boardId){
+        return taskService.getTasksByBoardId(boardId);
     }
 
 }

@@ -82,5 +82,9 @@ public class TaskService {
         log.info("TaskService: inside viewTasksCreatedByUser method");
         return taskRepository.findByCreatedBy(userId);
     }
+    public List<Task> getTasksByBoardId(Long boardId){
+        log.info("TaskService: inside getTasksByBoardId method");
+        return taskRepository.findByBoardId(boardId);
+    }
 
 }
