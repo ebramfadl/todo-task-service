@@ -59,7 +59,6 @@ public class TaskService {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
         task.setTaskStatus(TaskStatus.COMPLETED);
-        task.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         return taskRepository.save(task);
     }
 
