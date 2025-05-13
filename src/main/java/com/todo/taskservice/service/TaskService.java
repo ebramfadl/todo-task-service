@@ -98,7 +98,7 @@ public class TaskService {
     public Task unassignTag(Long taskId) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("Task not found."));
-        task.setTagName(null); // or "" to represent no tag
+        task.setTagName(null);
         return taskRepository.save(task);
     }
 
