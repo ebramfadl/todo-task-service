@@ -79,6 +79,8 @@ public class TaskService {
     }
 
     public Task assignTag(Long taskId, String tagName) {
+        log.info("TaskService: inside assignTag to task method");
+
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
 
@@ -87,6 +89,8 @@ public class TaskService {
     }
 
     public Task unassignTag(Long taskId) {
+        log.info("TaskService: inside UnassignTag to task method");
+
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("Task not found."));
         task.setTagName(null); // or "" to represent no tag
