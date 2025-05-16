@@ -57,30 +57,25 @@ public class TaskController {
         return taskService.viewTasksCreatedByUser(userId);
     }
 
-    @GetMapping("/filter")
-    public List<Task> filterTasks(
-            @RequestParam(value = "priority", required = false) TaskPriority priority,
-            @RequestParam(value = "status", required = false) TaskStatus status) {
-        if (priority != null && status != null) {
-            return taskService.filterTasksByPriorityAndStatus(priority, status);
-        } else if (priority != null) {
-            return taskService.filterTasksByPriority(priority);
-        } else if (status != null) {
-            return taskService.filterTasksByStatus(status);
-        } else {
-            return taskService.getAllTasks();
-        }
+    @GetMapping("/priority/{priority}")
+    public List<Task> filterTasksByPriority(@PathVariable TaskPriority priority) {
+        return taskService.filterTasksByPriority(priority);
     }
+
+    @GetMapping("/status/{status}")
+    public List<Task> filterTasksByStatus(@PathVariable TaskStatus status) {
+        return taskService.filterTasksByStatus(status);
+    }
+
     @GetMapping("/all")
     public List<Task> getAllTask(){
         return taskService.getAllTasks();
     }
-    @GetMapping("/date-range")
+    @GetMapping("/from/{startDate}/to/{endDate}")
     public List<Task> getTasksByDateRange(
-            @RequestParam("startDate") LocalDateTime startDate,
-            @RequestParam("endDate") LocalDateTime endDate) {
+            @PathVariable LocalDateTime startDate,
+            @PathVariable LocalDateTime endDate) {
         return taskService.getTasksByDateRange(startDate, endDate);
     }
-
 
 }

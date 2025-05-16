@@ -15,7 +15,6 @@ public interface TaskRepository extends JpaRepository<Task,Long> {
     public List<Task> findByCreatedBy(Long userId);
     public List<Task> findByTaskPriority(TaskPriority priority);
     public List<Task> findByTaskStatus(TaskStatus status);
-    public List<Task> findByTaskPriorityAndTaskStatus(TaskPriority priority, TaskStatus status);
     List<Task> findByDeadlineBetween(LocalDateTime startDate, LocalDateTime endDate);
 }
 

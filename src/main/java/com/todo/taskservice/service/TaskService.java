@@ -29,7 +29,8 @@ public class TaskService {
     @Transactional
     public Task addTask(TaskCreateDto taskCreateDto){
         log.info("TaskService: inside addTask method");
-        return taskFactory.createTask(taskCreateDto);
+       return taskRepository.save(taskFactory.createTask(taskCreateDto));
+//        return taskFactory.createTask(taskCreateDto);
     }
     public Task getById(Long id){
         log.info("TaskService: inside getById method");
@@ -91,9 +92,7 @@ public class TaskService {
         return taskRepository.findByTaskStatus(status);
     }
 
-    public List<Task> filterTasksByPriorityAndStatus(TaskPriority priority, TaskStatus status) {
-        return taskRepository.findByTaskPriorityAndTaskStatus(priority, status);
-    }
+
     @Transactional
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
