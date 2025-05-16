@@ -14,8 +14,6 @@ import java.util.List;
 @Service
 @Slf4j
 public class TaskService {
-
-
     private final TaskRepository taskRepository;
     private final TaskFactory taskFactory;
     private final UserClient userClient;
