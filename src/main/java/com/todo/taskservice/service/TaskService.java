@@ -89,6 +89,7 @@ public class TaskService {
     }
 
     public Task assignTag(Long taskId, String tagName) {
+        log.info("TaskService: inside assignTag method");
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
 
@@ -97,6 +98,7 @@ public class TaskService {
     }
 
     public Task unassignTag(Long taskId) {
+        log.info("TaskService: inside unassignTag method");
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("Task not found."));
         task.setTagName(null);
@@ -105,6 +107,7 @@ public class TaskService {
 
 
     public Task markTaskAsCompleted(Long id) {
+        log.info("TaskService: inside markTaskAsCompleted method");
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
         task.setTaskStatus(TaskStatus.COMPLETED);
@@ -112,10 +115,12 @@ public class TaskService {
     }
 
     public List<Task> searchTasksByTitle(String title) {
+        log.info("TaskService: inside searchTasksByTitle method");
         return taskRepository.findByTitleContainingIgnoreCase(title);
     }
 
     public List<Task> searchTasksByTag(String tag) {
+        log.info("TaskService: inside searchTasksByTag method");
         return taskRepository.findByTagNameContainingIgnoreCase(tag);
     }
 
