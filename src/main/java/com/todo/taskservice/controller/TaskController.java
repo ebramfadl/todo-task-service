@@ -2,11 +2,14 @@ package com.todo.taskservice.controller;
 
 import com.todo.taskservice.dto.TaskCreateDto;
 import com.todo.taskservice.dto.TaskCreateDto;
+import com.todo.taskservice.enums.TaskPriority;
+import com.todo.taskservice.enums.TaskStatus;
 import com.todo.taskservice.model.Task;
 import com.todo.taskservice.service.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -80,5 +83,26 @@ public class TaskController {
         return ResponseEntity.ok(taskService.searchTasksByTag(tag));
     }
 
+
+    @GetMapping("/priority/{priority}")
+    public List<Task> filterTasksByPriority(@PathVariable TaskPriority priority) {
+        return taskService.filterTasksByPriority(priority);
+    }
+
+    @GetMapping("/status/{status}")
+    public List<Task> filterTasksByStatus(@PathVariable TaskStatus status) {
+        return taskService.filterTasksByStatus(status);
+    }
+
+    @GetMapping("/all")
+    public List<Task> getAllTask(){
+        return taskService.getAllTasks();
+    }
+    @GetMapping("/from/{startDate}/to/{endDate}")
+    public List<Task> getTasksByDateRange(
+            @PathVariable LocalDateTime startDate,
+            @PathVariable LocalDateTime endDate) {
+        return taskService.getTasksByDateRange(startDate, endDate);
+    }
 
 }

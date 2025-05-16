@@ -3,12 +3,17 @@ package com.todo.taskservice.service;
 import com.todo.taskservice.client.UserClient;
 import com.todo.taskservice.dto.TaskCreateDto;
 import com.todo.taskservice.enums.TaskStatus;
+import com.todo.taskservice.enums.TaskPriority;
+import com.todo.taskservice.enums.TaskStatus;
 import com.todo.taskservice.factory.TaskFactory;
 import com.todo.taskservice.model.Task;
 import com.todo.taskservice.repository.TaskRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -121,5 +126,21 @@ public class TaskService {
         log.info("TaskService: inside searchTasksByTag method");
         return taskRepository.findByTagNameContainingIgnoreCase(tag);
     }
+    public List<Task> filterTasksByPriority(TaskPriority priority) {
+        return taskRepository.findByTaskPriority(priority);
+    }
 
+    public List<Task> filterTasksByStatus(TaskStatus status) {
+        return taskRepository.findByTaskStatus(status);
+    }
+
+
+    @Transactional
+    public List<Task> getAllTasks() {
+        return taskRepository.findAll();
+    }
+    @Transactional(readOnly = true)
+    public List<Task> getTasksByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+        return taskRepository.findByDeadlineBetween(startDate, endDate);
+    }
 }
