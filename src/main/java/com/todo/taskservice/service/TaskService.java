@@ -127,20 +127,20 @@ public class TaskService {
         return taskRepository.findByTagNameContainingIgnoreCase(tag);
     }
     public List<Task> filterTasksByPriority(TaskPriority priority) {
+        log.info("TaskService: inside filterTasksByPriority method");
         return taskRepository.findByTaskPriority(priority);
     }
 
     public List<Task> filterTasksByStatus(TaskStatus status) {
+        log.info("TaskService: inside filterTasksByStatus method");
         return taskRepository.findByTaskStatus(status);
     }
-
-
-    @Transactional
     public List<Task> getAllTasks() {
+        log.info("TaskService: inside getAllTasks method");
         return taskRepository.findAll();
     }
-    @Transactional(readOnly = true)
     public List<Task> getTasksByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+        log.info("TaskService: inside getTasksByDateRange method");
         return taskRepository.findByDeadlineBetween(startDate, endDate);
     }
 }
