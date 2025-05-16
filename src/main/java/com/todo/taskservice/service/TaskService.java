@@ -2,6 +2,7 @@ package com.todo.taskservice.service;
 
 import com.todo.taskservice.client.UserClient;
 import com.todo.taskservice.dto.TaskCreateDto;
+import com.todo.taskservice.enums.TaskStatus;
 import com.todo.taskservice.factory.TaskFactory;
 import com.todo.taskservice.model.Task;
 import com.todo.taskservice.repository.TaskRepository;
@@ -102,5 +103,20 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
+
+    public Task markTaskAsCompleted(Long id) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+        task.setTaskStatus(TaskStatus.COMPLETED);
+        return taskRepository.save(task);
+    }
+
+    public List<Task> searchTasksByTitle(String title) {
+        return taskRepository.findByTitleContainingIgnoreCase(title);
+    }
+
+    public List<Task> searchTasksByTag(String tag) {
+        return taskRepository.findByTagNameContainingIgnoreCase(tag);
+    }
 
 }

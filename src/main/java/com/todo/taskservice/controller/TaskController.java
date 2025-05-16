@@ -1,8 +1,10 @@
 package com.todo.taskservice.controller;
 
 import com.todo.taskservice.dto.TaskCreateDto;
+import com.todo.taskservice.dto.TaskCreateDto;
 import com.todo.taskservice.model.Task;
 import com.todo.taskservice.service.TaskService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -63,5 +65,20 @@ public class TaskController {
     public Task unassignTag(@PathVariable Long id) {
         return taskService.unassignTag(id);
     }
+
+    @PutMapping("/complete/{id}")
+    public ResponseEntity<Task> markTaskCompleted(@PathVariable Long id) {
+        return ResponseEntity.ok(taskService.markTaskAsCompleted(id));
+    }
+    @GetMapping("/search-by-title")
+    public ResponseEntity<List<Task>> searchByTitle(@RequestParam String title) {
+        return ResponseEntity.ok(taskService.searchTasksByTitle(title));
+    }
+
+    @GetMapping("/search-by-tag")
+    public ResponseEntity<List<Task>> searchByTag(@RequestParam String tag) {
+        return ResponseEntity.ok(taskService.searchTasksByTag(tag));
+    }
+
 
 }

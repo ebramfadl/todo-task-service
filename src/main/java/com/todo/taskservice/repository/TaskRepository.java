@@ -12,4 +12,7 @@ public interface TaskRepository extends JpaRepository<Task,Long> {
     public List<Task> findByCreatedBy(Long userId);
     public List<Task> findByBoardId(Long boardId);
 
+    List<Task> findByTitleContainingIgnoreCase(String title);
+    List<Task> findByTagNameContainingIgnoreCase(String tagName);
+
 }
