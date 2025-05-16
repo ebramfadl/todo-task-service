@@ -43,7 +43,7 @@ public class TaskController {
 
     @PutMapping("/assign/{taskId}/{userId}")
     public void assignTaskToUser(@PathVariable Long taskId, @PathVariable Long userId){
-        getTaskService().assignTaskToUser(taskId,userId);
+        taskService.assignTaskToUser(taskId,userId);
     }
     @PutMapping("/unassign/{taskId}")
     public void unassignTaskToUser(@PathVariable Long taskId){
