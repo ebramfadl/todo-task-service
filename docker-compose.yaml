@@ -11,8 +11,8 @@ services:
     image: 'rabbitmq:latest'
     container_name: rabbitmq
     environment:
-      - 'RABBITMQ_DEFAULT_PASS=secret'
-      - 'RABBITMQ_DEFAULT_USER=myuser'
+      - 'RABBITMQ_DEFAULT_PASS=guest'
+      - 'RABBITMQ_DEFAULT_USER=guest'
     ports:
       - '5672'
   task-service-1:
