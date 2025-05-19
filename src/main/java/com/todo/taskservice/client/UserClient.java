@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(name = "user-service", url = "http://localhost:8081/user")
+@FeignClient(name = "userservice",configuration = FeignConfig.class)
 public interface UserClient {
-    @GetMapping("")
+    @GetMapping("/user")
     Long getLoggedInUser();
-    @GetMapping("check-exists/{id}")
+    @GetMapping("/user/check-exists/{id}")
     Boolean checkUserExistsById(@PathVariable Long id);
 
-    @GetMapping("/user-setting/{id}")
+    @GetMapping("/user/user-setting/{id}")
     UserNotificationSetting getUserSetting(@PathVariable Long id);
-    @PostMapping("/settings")
+    @PostMapping("/user/settings")
     List<UserNotificationSetting> getSettings(@RequestBody List<Long> userIds);
 
 }
