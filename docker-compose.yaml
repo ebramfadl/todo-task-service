@@ -1,4 +1,22 @@
 services:
+  eureka-server:
+    image: eureka-server:latest
+    build:
+      context: ./
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - server.port=8761
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/todo-task
+      - spring.datasource.username=postgres
+      - spring.datasource.password=root
+      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
+      - EUREKA_CLIENT_FETCH_REGISTRY=false
+      - EUREKA_INSTANCE_HOSTNAME=eureka-server
+    depends_on:
+      - postgres
+
   postgres:
     image: 'postgres:latest'
     environment:
@@ -21,7 +39,8 @@ services:
     ports:
       - "8083:8083"
     environment:
-      - spring.datasource.url=jdbc:postgresql://host.docker.internal:5432/todo-task
+      - server.port=8083
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/todo-task
       - spring.datasource.username=postgres
       - spring.datasource.password=root
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
@@ -29,13 +48,17 @@ services:
       - Name=instance1
     depends_on:
       - postgres
+      - eureka-server
+
+
   task-service-2:
     build: .
     container_name: task-service-2
     ports:
       - "8084:8084"
     environment:
-      - spring.datasource.url=jdbc:postgresql://host.docker.internal:5432/todo-task
+      - server.port=8084
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/todo-task
       - spring.datasource.username=postgres
       - spring.datasource.password=root
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
@@ -43,6 +66,8 @@ services:
       - Name=instance2
     depends_on:
       - postgres
+      - eureka-server
+
   nginx:
     image: nginx:latest
     container_name: nginx-load-balancer
@@ -53,3 +78,4 @@ services:
     depends_on:
       - task-service-1
       - task-service-2
+
